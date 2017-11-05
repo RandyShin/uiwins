@@ -4,7 +4,9 @@
 
     <div class="row">
 
+
         <div class="col-md-12">
+
             <table id="mytable" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -35,7 +37,7 @@
                         <td>
                             @php
                                 if(substr($cdr->dst, 0,2)==='01'){
-                                    echo "무선";
+                                    echo "<font color='blue'>무선</font>";
                                 }
                                 if(substr($cdr->dst, 0,2)==='86'){
                                     echo "중국";
@@ -44,7 +46,7 @@
                                     echo "특수";
                                 }
                                 if((substr($cdr->dst, 0,2)!='01') && (substr($cdr->dst,0,2) != '86' ) && (substr($cdr->dst,0,3) != '070' ) && (substr($cdr->dst,0,3) != '050' )) {
-                                    echo "유선";
+                                    echo "<font color='green'>유선</font>";
                                 }
 
 
