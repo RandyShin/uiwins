@@ -34,68 +34,18 @@
                         <td>{{ substr($cdr->calldate,11,10) }}</td>
                         <td>{{ substr($cdr->calldate,0,10) }}</td>
                         <td>{{ $cdr->billsec }}</td>
-                        <td>
-                            @php
-                                if(substr($cdr->dst, 0,2)==='01'){
-                                    echo "<font color='blue'>무선</font>";
-                                }
-                                if(substr($cdr->dst, 0,2)==='86'){
-                                    echo "중국";
-                                }
-                                if((substr($cdr->dst, 0,3)==='070') || (substr($cdr->dst,0,3) === '050' )) {
-                                    echo "특수";
-                                }
-                                if((substr($cdr->dst, 0,2)!='01') && (substr($cdr->dst,0,2) != '86' ) && (substr($cdr->dst,0,3) != '070' ) && (substr($cdr->dst,0,3) != '050' )) {
-                                    echo "<font color='green'>유선</font>";
-                                }
-
-
-                            @endphp
-                        </td>
-                        <td>
-                            @php
-                                if(substr($cdr->dst, 0,2)==='01'){
-                                    echo ceil($cdr->billsec/10);
-                                }
-                                if(substr($cdr->dst, 0,2)==='86'){
-                                    echo ceil($cdr->billsec/60);
-                                }
-                                if((substr($cdr->dst, 0,3)==='070') || (substr($cdr->dst,0,3) === '050' )) {
-                                    echo ceil($cdr->billsec/180);
-                                }
-                                if((substr($cdr->dst, 0,2)!='01') && (substr($cdr->dst,0,2) != '86' ) && (substr($cdr->dst,0,3) != '070' ) && (substr($cdr->dst,0,3) != '050' )) {
-                                    echo ceil($cdr->billsec/180);
-                                }
-
-                            @endphp
-                        </td>
-                        <td>
-                            @php
-                                if(substr($cdr->dst, 0,2)==='01'){
-                                    echo ceil($cdr->billsec/10)*6.8;
-                                }
-                                if(substr($cdr->dst, 0,2)==='86'){
-                                    echo ceil($cdr->billsec/60)*22;
-                                }
-                                if((substr($cdr->dst, 0,3)==='070') || (substr($cdr->dst,0,3) === '050' )) {
-                                    echo ceil($cdr->billsec/180)*45;
-                                }
-                                if((substr($cdr->dst, 0,2)!='01') && (substr($cdr->dst,0,2) != '86' ) && (substr($cdr->dst,0,3) != '070' ) && (substr($cdr->dst,0,3) != '050' )) {
-                                    echo ceil($cdr->billsec/180)*32;
-                                }
-
-                            @endphp
-                        </td>
-
-
+                        <td>{!! $cdr->getType() !!}</td>
+                        <td>{{ $cdr->getUnit() }}</td>
+                        <td>{{ $cdr->getPrice() }}</td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
         </div>
 
-
-
+        <div>
+            <p>남은 금액 : {{ $cdr->getTotal() }}</p>
+        </div>
 
         <div class="text-center">
             {!! $cdrs->links() !!}
