@@ -19,10 +19,21 @@ class BalanceController extends Controller
         $cdrs = Cdr::whereIn('src', $ext)->orderBy('calldate', 'desc')
             ->paginate(15);
 
-        $cnt = Cdr::whereIn('src', $ext)->count();
-        
+        $prices = Cdr::whereIn('src', $ext)->get();
 
-        return view('list.index')->withCdrs($cdrs)->withCnt($cnt);
+        $cnt = Cdr::whereIn('src', $ext)-> count();
+
+        $total = 0;
+
+        foreach ($prices as $price)
+        {
+            if(substr($price->dst,'0','2') === '01');
+            {
+                $total = $total + ceil($price->billsec/10)*6.8;
+            }
+        }
+
+        return view('list.index')->withCdrs($cdrs)->withCnt($cnt)->withTotal($total);
     }
 
 

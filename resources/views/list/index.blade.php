@@ -44,7 +44,7 @@
         </div>
 
         <div>
-            <p>남은 금액 : {{ $cdr->getTotal() }}</p>
+            <p>남은 금액 : {{ $total }}</p>
         </div>
 
         <div class="text-center">
