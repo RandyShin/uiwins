@@ -7,21 +7,38 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Cdr;
 use DB;
-
+use DateTime;
 
 class BalanceController extends Controller
 {
     public function index()
     {
 
-        $ext = [2200,2201,2202,2203,2204,2205,2206,2207,2208,2209,2210,2211,2212,2213,2214,2215,2216,2217,2218,2219,2220];
+        // get date from and to
+        $dateFrom   = \Request::get('dateFrom');
+        $dateTo     = \Request::get('dateTo');
+        //end
 
 
-        $cdrs = Cdr::whereIn('src', $ext)->whereRaw('LENGTH(dst) != 4')->orderBy('calldate', 'desc')->paginate(15);
+        echo $dateFrom;
+ echo $dateTo;
 
-        $prices = Cdr::whereIn('src', $ext)->whereRaw('LENGTH(dst) != 4')->get();
+        $cdrs = Cdr::where('dstchannel', 'like', 'SIP/SMI%')
+            ->whereRaw('LENGTH(dst) != 4')
+            ->where('calldate','>=', $dateFrom . ' 00:00:00')
+            ->where('calldate','<=', $dateTo . ' 23:59:59')
+            ->orderBy('calldate', 'desc')
+            ->paginate(15);
 
-        $cnt = Cdr::whereIn('src', $ext)->whereRaw('LENGTH(dst) != 4')->count();
+        $prices = Cdr::where('dstchannel', 'like', 'SIP/SMI%')
+            ->whereRaw('LENGTH(dst) != 4')
+            ->get();
+
+        $cnt = Cdr::where('dstchannel', 'like', 'SIP/SMI%')
+            ->whereRaw('LENGTH(dst) != 4')
+            ->where('calldate','>=', $dateFrom . ' 00:00:00')
+            ->where('calldate','<=', $dateTo . ' 23:59:59')
+            ->count();
 
         $total = 0;
 

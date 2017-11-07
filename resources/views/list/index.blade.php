@@ -4,6 +4,35 @@
 
     <div class="row">
 
+        <div class="col-md-12">
+
+            <h2>요금 관리 페이지</h2>
+            <div class="col-md-12">
+
+                <form action="" method="GET" onsubmit="search()" id="frmsearch">
+
+                    <table class="table tabled-bordered">
+                        <tr>
+
+                            <td>
+                                <input type="text" name="dateFrom" id="datepicker1" class="span3" value="{{ Request::get('from', \Carbon\Carbon::now()->format('Y-m-d')) }}" readonly style="display: inline-block;"> ~
+                                <input type="text" name="dateTo" id="datepicker2" class="span3" value="{{ Request::get('to', \Carbon\Carbon::now()->format('Y-m-d')) }}" readonly style="display: inline-block;">
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-search btn-block">
+                                    <i class="fa fa-search"></i>Search
+                                </button>
+                            </td>
+
+                        </tr>
+                    </table>
+
+                </form>
+
+            </div>
+
+        </div>
+
 
         <div class="col-md-12">
 
