@@ -66,6 +66,7 @@
                         <td>{!! $cdr->getType() !!}</td>
                         <td>{{ $cdr->getUnit() }}</td>
                         <td>{{ $cdr->getPrice() }}</td>
+                        {{--<td>{{ number_format($cdr->getPrice(), 1,'.',',') }}</td>--}}
                     </tr>
                 @endforeach
                 </tbody>
@@ -77,11 +78,10 @@
         </div>
 
         <div class="text-center">
-            {!! $cdrs->links() !!}
+            {{ $cdrs->appends(Request::all())->links() }}
         </div>
     </div>
 
-
-
+    <a href="{{ url('excel') }}">Excel</a>
 
 @endsection

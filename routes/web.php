@@ -16,6 +16,8 @@
 
     Route::get('/', 'BalanceController@index');
 
+    Route::get('excel', 'BalanceController@excel');
+
 
 
 
