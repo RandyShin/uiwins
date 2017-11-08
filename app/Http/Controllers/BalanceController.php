@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use function foo\func;
 use Illuminate\Http\Request;
 
@@ -14,22 +15,24 @@ use Excel;
 class BalanceController extends Controller
 {
 
-    public function index()
+    public $dateForm;
+    public $dateTo;
+
+    public function __construct(Request $request)
+    {
+        $this->dateFrom   = \Request::get('dateFrom', Carbon::now()->format('Y-m-d'));
+        $this->dateTo     = \Request::get('dateTo', Carbon::now()->format('Y-m-d'));
+    }
+
+    public function index(Request $request)
     {
 
-        // get date from and to
-        $dateFrom   = \Request::get('dateFrom');
-        $dateTo     = \Request::get('dateTo');
-        //end
-
-
-        echo $dateFrom;
- echo $dateTo;
+        $params = $request->all();
 
         $cdrs = Cdr::where('dstchannel', 'like', 'SIP/SMI%')
             ->whereRaw('LENGTH(dst) != 4')
-            ->where('calldate','>=', $dateFrom . ' 00:00:00')
-            ->where('calldate','<=', $dateTo . ' 23:59:59')
+            ->where('calldate','>=', $this->dateFrom . ' 00:00:00')
+            ->where('calldate','<=', $this->dateTo . ' 23:59:59')
             ->orderBy('calldate', 'desc')
             ->paginate(15);
 
@@ -37,15 +40,13 @@ class BalanceController extends Controller
             ->whereRaw('LENGTH(dst) != 4')
             ->get();
 
-        $cnt = Cdr::where('dstchannel', 'like', 'SIP/SMI%')
-            ->whereRaw('LENGTH(dst) != 4')
-            ->where('calldate','>=', $dateFrom . ' 00:00:00')
-            ->where('calldate','<=', $dateTo . ' 23:59:59')
-            ->count();
+//        $cnt = Cdr::where('dstchannel', 'like', 'SIP/SMI%')
+//            ->whereRaw('LENGTH(dst) != 4')
+//            ->where('calldate','>=', $this->dateFrom . ' 00:00:00')
+//            ->where('calldate','<=', $this->dateTo . ' 23:59:59')
+//            ->count();
 
-        //Excel export
-        Excel::create('test');
-
+        $cnt = $cdrs->total();
 
 
         // get total price result
@@ -70,24 +71,18 @@ class BalanceController extends Controller
         // get total price result
 
 
-        return view('list.index')->withCdrs($cdrs)->withCnt($cnt)->withTotal($total);
+        return view('list.index', compact('params', 'cdrs', 'cnt', 'total'));
     }
 
         public function excel()
         {
 
-            // get date from and to
-//            $dateFrom   = \Request::get('dateFrom');
-//            $dateTo     = \Request::get('dateTo');
-            //end
-
-
 
             $cdrs = Cdr::select('src','dst','disposition','duration')
                 ->where('dstchannel', 'like', 'SIP/SMI%')
                 ->whereRaw('LENGTH(dst) != 4')
-//                ->where('calldate','>=', $dateFrom . ' 00:00:00')
-//                ->where('calldate','<=', $dateTo . ' 23:59:59')
+                ->where('calldate','>=', $this->dateFrom . ' 00:00:00')
+                ->where('calldate','<=', $this->dateTo . ' 23:59:59')
                 ->get();
 
 
