@@ -78,7 +78,7 @@ class BalanceController extends Controller
         {
 
 
-            $cdrs = Cdr::select('src','dst','disposition','duration')
+            $cdrs = Cdr::select('src as 발신번호','dst as 착신번호','disposition as 통화결과','duration as 통화시간','calldate as 통화날짜', 'billsec', 'billsec as 도수', 'billsec as 요금')
                 ->where('dstchannel', 'like', 'SIP/SMI%')
                 ->whereRaw('LENGTH(dst) != 4')
                 ->where('calldate','>=', $this->dateFrom . ' 00:00:00')

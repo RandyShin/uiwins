@@ -19,7 +19,12 @@
                                 <input type="text" name="dateTo" id="datepicker2" class="span3" value="{{ Request::get('to', Request::get('dateTo', \Carbon\Carbon::now()->format('Y-m-d'))) }}" readonly style="display: inline-block;">
                             </td>
                             <td>
+                                <a href="{{ url('excel') . '?' . http_build_query($params) }}">Excel</a>
+                            </td>
+                            <td>
                                 <button type="submit" class="btn btn-search btn-block">
+
+
                                     <i class="fa fa-search"></i>Search
                                 </button>
                             </td>
@@ -82,6 +87,6 @@
         </div>
     </div>
 
-    <a href="{{ url('excel') . '?' . http_build_query($params) }}">Excel</a>
+
 
 @endsection
