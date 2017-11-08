@@ -13,15 +13,7 @@
         <div class="col-md-4"></div>
         <div class="form-group col-md-4">
             <label for="company">Company:</label>
-            <select class="form-control" name="company">
-                <option value="">Select Company</option>
-                <option value="knk">knk</option>
-                <option value="smi">smi</option>
-            </select>
-
-            {{----}}
-            {{--<label for="company">Company:</label>--}}
-            {{--<input type="text" class="form-control" name="company">--}}
+            <input type="text" class="form-control" name="company" value="SMI">
         </div>
     </div>
     <div class="row">
@@ -37,6 +29,11 @@
         <div class="form-group col-md-4">
             <button type="submit" class="btn btn-success" style="margin-left:38px">Add Deposit</button>
         </div>
+        <div class="col-md-4"></div>
+        <div class="form-group col-md-4">
+            <div>Deposit Total : {{ $deposit_total }}</div>
+        </div>
+
     </div>
 </form>
 
