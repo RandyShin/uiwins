@@ -9,6 +9,10 @@
             <h2>요금 관리 페이지</h2>
             <div class="col-md-12">
 
+                <div class="pull-right">
+                    <a href="#" class="btn btn-info" onClick="return popitup('deposit')">Deposit</a>
+                </div>
+
                 <form action="" method="GET" onsubmit="search()" id="frmsearch">
 
                     <table class="table tabled-bordered">
@@ -36,7 +40,7 @@
 
             </div>
 
-        </div>
+
 
 
         <div class="col-md-12">
@@ -87,6 +91,13 @@
         </div>
     </div>
 
-
+    <script>
+        function popitup(url)
+        {
+            newwindow=window.open(url,'name','height=300,width=650,screenX=400,screenY=350');
+            if (window.focus) {newwindow.focus()}
+            return false;
+        }
+    </script>
 
 @endsection

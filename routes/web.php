@@ -18,7 +18,7 @@
 
     Route::get('excel', 'BalanceController@excel');
 
-
+    Route::resource('deposit','DepositController');
 
 
 //DB::listen(function ($query){
