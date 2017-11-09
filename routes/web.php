@@ -22,9 +22,15 @@
 
     Route::resource('deposit','DepositController');
 
+// for logout link
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
 
 //DB::listen(function ($query){
 //
 //    var_dump($query->sql);
 //
 //});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

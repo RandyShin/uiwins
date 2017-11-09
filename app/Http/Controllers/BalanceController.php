@@ -22,6 +22,8 @@ class BalanceController extends Controller
 
     public function __construct(Request $request)
     {
+        $this->middleware('auth');
+
         $this->dateFrom   = \Request::get('dateFrom', Carbon::now()->format('Y-m-d'));
         $this->dateTo     = \Request::get('dateTo', Carbon::now()->format('Y-m-d'));
     }
@@ -45,6 +47,7 @@ class BalanceController extends Controller
 
         $cnt = $cdrs->total();
 
+        $this->getTotal();
 
         // get total price result
         $total = $this->total;

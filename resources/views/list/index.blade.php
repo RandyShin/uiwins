@@ -5,13 +5,20 @@
     <div class="row">
 
         <div class="col-md-12">
-
-            <h2>요금 관리 페이지</h2>
+            <h2>{{ Auth::user()->name }}님 요금 관리 페이지</h2>
             <div class="col-md-12">
 
-                <div class="pull-right">
-                    <a href="#" class="btn btn-info" onClick="return popitup('deposit')">Deposit</a>
-                </div>
+
+                @if (Auth::check() =='admin')
+
+                    <div class="pull-right">
+                        <a href="#" class="btn btn-info" onClick="return popitup('deposit')">Deposit</a>
+                    </div>
+
+                @else
+
+                @endif
+
 
                 <form action="" method="GET" onsubmit="search()" id="frmsearch">
 
@@ -23,7 +30,7 @@
                                 <input type="text" name="dateTo" id="datepicker2" class="span3" value="{{ Request::get('to', Request::get('dateTo', \Carbon\Carbon::now()->format('Y-m-d'))) }}" readonly style="display: inline-block;">
                             </td>
                             <td>
-                                <a href="{{ url('excel') . '?' . http_build_query($params) }}">Excel</a>
+                                <a href="{{ url('excel') . '?' . http_build_query($params) }}" class="btn btn-warning">Excel</a>
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-search btn-block">
