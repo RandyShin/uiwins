@@ -56,10 +56,12 @@ class BalanceController extends Controller
         // get total price result
         $total = $this->total;
 
+        $deposits_total = Deposit::sum('amount');
+
         // get total price result
 
 
-        return view('list.index', compact('params', 'cdrs', 'cnt', 'total'));
+        return view('list.index', compact('params', 'cdrs', 'cnt', 'total', 'deposits_total'));
     }
 
         public function excel()

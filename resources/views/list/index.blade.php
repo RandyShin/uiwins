@@ -9,7 +9,7 @@
             <div class="col-md-12">
 
 
-                @if (Auth::check() =='admin')
+                @if (Auth::user()->name === 'admin')
 
                     <div class="pull-right">
                         <a href="#" class="btn btn-info" onClick="return popitup('deposit')">Deposit</a>
