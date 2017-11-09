@@ -13,6 +13,9 @@
         <div class="col-md-4"></div>
         <div class="form-group col-md-4">
             <label for="company">Company:</label>
+            <div>
+                <a href="reset.php">reset</a>
+            </div>
             <input type="text" class="form-control" name="company" value="smi">
         </div>
     </div>

@@ -12,10 +12,16 @@ echo "deposit total is " . $deposits_total;
 echo '<br>';
 echo "total is " . $total ;
 
-$balacnce = $deposits_total - $total;
+$balance = $deposits_total - $total;
 echo '<br>';
-echo 'balance is ' . $balacnce;
+echo 'balance is ' . $balance;
 
-if ($balacnce <= 0) {
-    echo "wala";
+
+$ch = curl_init();
+
+if
+($balance <= 0 ) {
+    curl_setopt($ch, CURLOPT_URL, "1.230.124.84/smi_deposit_down.php");
+    curl_exec($ch);
 }
+
