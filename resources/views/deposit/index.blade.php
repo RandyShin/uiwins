@@ -29,6 +29,11 @@
         <div class="form-group col-md-4">
             <button type="submit" class="btn btn-success" style="margin-left:38px">Add Deposit</button>
         </div>
+        <div class="col-md-4"></div>
+        <div class="form-group col-md-4">
+            <div>Deposit Total : {{ $deposit_total }}</div>
+        </div>
+
     </div>
 </form>
 

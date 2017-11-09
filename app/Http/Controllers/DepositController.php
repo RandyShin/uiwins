@@ -17,7 +17,10 @@ class DepositController extends Controller
     {
         $deposits = Deposit::all();
 
-        return view('deposit.index')->withDeposits($deposits);
+        $deposit_total = Deposit::sum('amount');
+
+//        return view('deposit.index')->withDeposits($deposits)->withDeposit_total($deposit_total);
+        return view('deposit.index', compact('deposits', 'deposit_total'));
     }
 
     /**
