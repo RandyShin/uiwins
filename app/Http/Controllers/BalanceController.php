@@ -27,18 +27,22 @@ class BalanceController extends Controller
         $this->dateFrom   = \Request::get('dateFrom', Carbon::now()->format('Y-m-d'));
         $this->dateTo     = \Request::get('dateTo', Carbon::now()->format('Y-m-d'));
     }
+	
+	function queryList() {
+		$cdrs = Cdr::where('dstchannel', 'like', 'SIP/SMI%')
+            ->whereRaw('LENGTH(dst) != 4')
+            ->where('calldate','>=', $this->dateFrom . ' 00:00:00')
+            ->where('calldate','<=', $this->dateTo . ' 23:59:59');
 
+		return $cdrs;
+	}
     public function index(Request $request)
     {
 
         $params = $request->all();
 
-        $cdrs = Cdr::where('dstchannel', 'like', 'SIP/SMI%')
-            ->whereRaw('LENGTH(dst) != 4')
-            ->where('calldate','>=', $this->dateFrom . ' 00:00:00')
-            ->where('calldate','<=', $this->dateTo . ' 23:59:59')
-            ->orderBy('calldate', 'desc')
-            ->paginate(15);
+        $cdrs = $this->queryList();
+		$cdrs = $cdrs->orderBy('calldate', 'desc')->paginate(15);
 
         $prices = Cdr::where('dstchannel', 'like', 'SIP/SMI%')
             ->whereRaw('LENGTH(dst) != 4')
@@ -60,26 +64,17 @@ class BalanceController extends Controller
 
         public function excel()
         {
-
-
-            $cdrs = Cdr::select('src as 발신번호','dst as 착신번호','disposition as 통화결과','duration as 통화시간','calldate as 통화날짜', 'billsec', 'billsec as 도수', 'billsec as 요금')
-                ->where('dstchannel', 'like', 'SIP/SMI%')
-                ->whereRaw('LENGTH(dst) != 4')
-                ->where('calldate','>=', $this->dateFrom . ' 00:00:00')
-                ->where('calldate','<=', $this->dateTo . ' 23:59:59')
-                ->get();
-
-
-
-
-//            $cdrs = Cdr::select('calldate', 'src', 'dst')->limit(50)->get();
-
-
-            Excel::create('cdr', function($excel) use($cdrs) {
+             /*Excel::create('cdr', function($excel) use($cdrs) {
                 $excel->sheet('Sheet', function($sheet) use($cdrs) {
                     $sheet->fromArray($cdrs);
                 });
-            })->export('xlsx');
+              })->export('xlsx');*/
+
+			 $cdrs = $this->queryList();
+			 $cnt = $cdrs->count();
+		     $cdrs = $cdrs->orderBy('calldate', 'desc')->get();
+
+			 return view('list.excel', compact('cdrs', 'cnt'));
 
 
         }
