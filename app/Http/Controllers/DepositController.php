@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Deposit;
+use Symfony\Component\Debug\Debug;
 
 class DepositController extends Controller
 {
@@ -106,5 +107,14 @@ class DepositController extends Controller
         $deposit = Deposit::find($id);
         $deposit->delete();
         return redirect('deposit')->with('success','Product has been  deleted');
+    }
+
+    public function deposit()
+    {
+        $deposits_total = Deposit::sum('amount');
+
+        return view('list.process',compact('deposits_total'));
+
+
     }
 }

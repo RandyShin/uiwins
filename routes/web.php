@@ -18,6 +18,8 @@
 
     Route::get('excel', 'BalanceController@excel');
 
+    Route::get('process', 'BalanceController@process');
+
     Route::resource('deposit','DepositController');
 
 
