@@ -82,6 +82,7 @@
                         <td>{!! $cdr->getType() !!}</td>
                         <td>{{ $cdr->getUnit() }}</td>
                         <td>{{ $cdr->getPrice() }}</td>
+                        {{--<td>{{ $cdr->getPrice() == 0 ? $cdr->getprice() : number_format($cdr->getprice(),1)  }}</td>--}}
                         {{--<td>{{ number_format($cdr->getPrice(), 1,'.',',') }}</td>--}}
                     </tr>
                 @endforeach
@@ -90,7 +91,7 @@
         </div>
 
         <div>
-            <p>남은 금액 : {{ $deposits_total - $total }}</p>
+            <p>남은 금액 : {{ number_format($deposits_total - $total) }}</p>
         </div>
 
         <div class="text-center">
