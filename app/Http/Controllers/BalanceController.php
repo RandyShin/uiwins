@@ -29,7 +29,7 @@ class BalanceController extends Controller
     }
 
     function queryList() {
-        $cdrs = Cdr::where('dstchannel', 'like', 'SIP/SMI%')
+        $cdrs = Cdr::where('dcontext', '=', 'SMILan_rulematch')
             ->whereRaw('LENGTH(dst) != 4')
             ->where('calldate','>=', $this->dateFrom . ' 00:00:00')
             ->where('calldate','<=', $this->dateTo . ' 23:59:59');
@@ -44,7 +44,7 @@ class BalanceController extends Controller
         $cdrs = $this->queryList();
         $cdrs = $cdrs->orderBy('calldate', 'desc')->paginate(15);
 
-        $prices = Cdr::where('dstchannel', 'like', 'SIP/SMI%')
+        $prices = Cdr::where('dcontext', '=', 'SMILan_rulematch')
             ->whereRaw('LENGTH(dst) != 4')
             ->get();
 
@@ -98,7 +98,7 @@ class BalanceController extends Controller
 
     private function getTotal()
     {
-        $prices = Cdr::where('dstchannel', 'like', 'SIP/SMI%')
+        $prices = Cdr::where('dcontext', '=', 'SMILan_rulematch')
             ->whereRaw('LENGTH(dst) != 4')
             ->get();
 
