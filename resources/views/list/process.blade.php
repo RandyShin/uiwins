@@ -21,7 +21,7 @@ $ch = curl_init();
 
 if
 ($balance <= 0 ) {
-    curl_setopt($ch, CURLOPT_URL, "1.230.124.84/smi_deposit_down.php");
+    curl_setopt($ch, CURLOPT_URL, "http://pbx01.ziotes.com:5833/smi_deposit_down.php");
     curl_exec($ch);
 }
 

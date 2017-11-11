@@ -3,7 +3,7 @@
 
 $ch = curl_init();
 
-curl_setopt($ch, CURLOPT_URL, "1.230.124.84/smi_deposit_up.php");
+curl_setopt($ch, CURLOPT_URL, "http://pbx01.ziotes.com:5833/smi_deposit_up.php");
 curl_exec($ch);
 
 echo "처리되었습니다. </br>";
