@@ -5,19 +5,22 @@
     <div class="row">
 
         <div class="col-md-12">
-            <h2>{{ Auth::user()->name }}님 요금 관리 페이지</h2>
+            <span style="font-weight:900; font-size: 20px;">{{ Auth::user()->name }}님 요금 관리 페이지</span>
+
+            @if (Auth::user()->name === 'admin')
+
+                <span class="pull-right" style="margin-bottom: 5px;">
+                        <a href="#" class="btn btn-info" onClick="return popitup('deposit')">Deposit</a>
+                    </span>
+
+            @else
+
+            @endif
+
             <div class="col-md-12">
 
 
-                @if (Auth::user()->name === 'admin')
 
-                    <div class="pull-right">
-                        <a href="#" class="btn btn-info" onClick="return popitup('deposit')">Deposit</a>
-                    </div>
-
-                @else
-
-                @endif
 
 
                 <form action="" method="GET" onsubmit="search()" id="frmsearch">
