@@ -25,24 +25,21 @@
 
                 <form action="" method="GET" onsubmit="search()" id="frmsearch">
 
-                    <table class="table tabled-bordered">
+                    <table class="table tabled-bordered" style="margin-bottom: 0px;">
                         <tr>
 
-                            <td>
+                            <td style="padding-top: 12px;width: 416px;">
                                 <input type="text" name="dateFrom" id="datepicker1" class="span3" value="{{ Request::get('from', Request::get('dateFrom', \Carbon\Carbon::now()->format('Y-m-d'))) }}" readonly style="display: inline-block;"> ~
                                 <input type="text" name="dateTo" id="datepicker2" class="span3" value="{{ Request::get('to', Request::get('dateTo', \Carbon\Carbon::now()->format('Y-m-d'))) }}" readonly style="display: inline-block;">
+                            </td>
+                            <td style="width: 616px;">
+                                <button type="submit" class="btn btn-search btn-block">
+                                    <i class="fa fa-search"></i>Search
+                                </button>
                             </td>
                             <td>
                                 <a href="{{ url('excel') . '?' . http_build_query($params) }}" class="btn btn-warning">Excel</a>
                             </td>
-                            <td>
-                                <button type="submit" class="btn btn-search btn-block">
-
-
-                                    <i class="fa fa-search"></i>Search
-                                </button>
-                            </td>
-
                         </tr>
                     </table>
 
