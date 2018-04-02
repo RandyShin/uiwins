@@ -21,7 +21,7 @@ class DepositController extends Controller
     
     public function index()
     {
-        $deposits = Deposit::all();
+        $deposits = Deposit::orderby('id','desc')->get();
 
         $deposit_total = Deposit::sum('amount');
 
