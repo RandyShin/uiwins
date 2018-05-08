@@ -34,7 +34,7 @@
         </div>
         <div class="col-md-4"></div>
         <div class="form-group col-md-4">
-            <div>Deposit Total : {{ $deposit_total }}</div>
+            <div>Deposit Total : {{ number_format($deposit_total) }}</div>
         </div>
 
     </div>
@@ -62,7 +62,7 @@
             <tr>
                 <td>{{$deposit->id}}</td>
                 <td>{{$deposit->company}}</td>
-                <td>{{$deposit->amount}}</td>
+                <td>{{number_format($deposit->amount)}}</td>
                 <td>{{$deposit->created_at->format('Y-m-d')}}</td>
                 <td><a href="{{action('DepositController@edit', $deposit['id'])}}" class="btn btn-warning">Edit</a></td>
                 <td>
