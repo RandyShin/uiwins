@@ -50,7 +50,7 @@
                     <th>Duration</th>
                     <th>CallTime</th>
                     <th>CallDate</th>
-                    <th>billsec</th>
+                    <th>Billsec</th>
                 </tr>
                 </thead>
                 <tbody>

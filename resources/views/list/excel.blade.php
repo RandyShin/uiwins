@@ -14,16 +14,13 @@ header("Content-Disposition: attachment; filename=list.xls");
 	<thead>
 	<tr>
 		<th>IDX</th>
-		<th>발신번호</th>
-		<th>착신번호</th>
-		<th>통화결과</th>
-		<th>통화시간</th>
-		<th>발신시간</th>
-		<th>통화날짜</th>
-		<th>billsec</th>
-		<th>착신종류</th>
-		<th>도수</th>
-		<th>요금</th>
+		<th>CID</th>
+		<th>DID</th>
+		<th>Disposition</th>
+		<th>Duration</th>
+		<th>CallTime</th>
+		<th>CallDate</th>
+		<th>Billsec</th>
 	</tr>
 	</thead>
 	<tbody>
@@ -37,10 +34,6 @@ header("Content-Disposition: attachment; filename=list.xls");
 			<td>{{ substr($cdr->calldate,11,10) }}</td>
 			<td>{{ substr($cdr->calldate,0,10) }}</td>
 			<td>{{ $cdr->billsec }}</td>
-			<td>{!! $cdr->getType() !!}</td>
-			<td>{{ $cdr->getUnit() }}</td>
-			<td>{{ $cdr->getPrice() }}</td>
-			
 		</tr>
 	@endforeach
 	</tbody>
