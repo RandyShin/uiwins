@@ -5,23 +5,9 @@
     <div class="row">
 
         <div class="col-md-12">
-            <span style="font-weight:900; font-size: 20px;">{{ Auth::user()->name }}님 요금 관리 페이지</span>
-
-            @if (Auth::user()->name === 'admin')
-
-                <span class="pull-right" style="margin-bottom: 5px;">
-                        <a href="#" class="btn btn-info" onClick="return popitup('deposit')">Deposit</a>
-                    </span>
-
-            @else
-
-            @endif
+            <span style="font-weight:900; font-size: 20px;">{{ Auth::user()->name }} Bill List Page</span>
 
             <div class="col-md-12">
-
-
-
-
 
                 <form action="" method="GET" onsubmit="search()" id="frmsearch">
 
@@ -37,9 +23,11 @@
                                     <i class="fa fa-search"></i>Search
                                 </button>
                             </td>
+                            {{--@if (Auth::user()->name === 'admin')--}}
                             <td>
                                 <a href="{{ url('excel') . '?' . http_build_query($params) }}" class="btn btn-warning">Excel</a>
                             </td>
+                            {{--@endif--}}
                         </tr>
                     </table>
 
@@ -56,16 +44,13 @@
                 <thead>
                 <tr>
                     <th>IDX</th>
-                    <th>발신번호</th>
-                    <th>착신번호</th>
-                    <th>통화결과</th>
-                    <th>통화시간</th>
-                    <th>발신시간</th>
-                    <th>통화날짜</th>
+                    <th>CID</th>
+                    <th>DID</th>
+                    <th>Disposition</th>
+                    <th>Duration</th>
+                    <th>CallTime</th>
+                    <th>CallDate</th>
                     <th>billsec</th>
-                    <th>착신종류</th>
-                    <th>도수</th>
-                    <th>요금</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -73,17 +58,12 @@
                     <tr>
                         <td>{{ str_replace('-','',(($cdrs->currentpage()-1) *15) - ($cnt--))  }}</td>
                         <td>{{ $cdr->src }}</td>
-                        <td>{{ $cdr->dst }}</td>
+                        <td>{{ $cdr->did }}</td>
                         <td>{{ $cdr->disposition }}</td>
                         <td>{{ $cdr->duration }}</td>
                         <td>{{ substr($cdr->calldate,11,10) }}</td>
                         <td>{{ substr($cdr->calldate,0,10) }}</td>
                         <td>{{ $cdr->billsec }}</td>
-                        <td>{!! $cdr->getType() !!}</td>
-                        <td>{{ $cdr->getUnit() }}</td>
-                        <td>{{ $cdr->getPrice() }}</td>
-                        {{--<td>{{ $cdr->getPrice() == 0 ? $cdr->getprice() : number_format($cdr->getprice(),1)  }}</td>--}}
-                        {{--<td>{{ number_format($cdr->getPrice(), 1,'.',',') }}</td>--}}
                     </tr>
                 @endforeach
                 </tbody>
@@ -91,7 +71,8 @@
         </div>
 
         <div>
-            <p>남은 금액 : {{ number_format($deposits_total - $total) }}</p>
+            <p>총 사용 초  : {{ number_format($total_billsec) }}</p>
+            <p>총 사용 분  : {{ number_format($total_billsec / 60) }}</p>
         </div>
 
         <div class="text-center">

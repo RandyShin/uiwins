@@ -11,6 +11,7 @@ use App\Cdr;
 use App\Deposit;
 use DB;
 use Excel;
+use Auth;
 
 
 class BalanceController extends Controller
@@ -28,11 +29,19 @@ class BalanceController extends Controller
         $this->dateTo     = \Request::get('dateTo', Carbon::now()->format('Y-m-d'));
     }
 
+
+
     function queryList() {
-        $cdrs = Cdr::where('dcontext', '=', 'SMILan_rulematch')
-            ->whereRaw('LENGTH(dst) != 4')
-            ->where('calldate','>=', $this->dateFrom . ' 00:00:00')
+
+    if ( Auth::user()->name === 'admin') {
+        $cdrs = Cdr::where('calldate','>=', $this->dateFrom . ' 00:00:00')
             ->where('calldate','<=', $this->dateTo . ' 23:59:59');
+    }
+        else{
+            $cdrs = Cdr::where('dstchannel', 'like', 'SIP/UnitedKingdom%')
+                ->where('calldate','>=', $this->dateFrom . ' 00:00:00')
+                ->where('calldate','<=', $this->dateTo . ' 23:59:59');
+        }
 
         return $cdrs;
     }
@@ -51,17 +60,10 @@ class BalanceController extends Controller
 
         $cnt = $cdrs->total();
 
-        $this->getTotal();
-
-        // get total price result
-        $total = $this->total;
-
-        $deposits_total  = Deposit::sum('amount');
-
-        // get total price result
+        $total_billsec = $this->getBillsec();
 
 
-        return view('list.index', compact('params', 'cdrs', 'cnt', 'total', 'deposits_total'));
+        return view('list.index', compact('params', 'cdrs', 'cnt', 'total_billsec'));
     }
 
     public function excel()
@@ -94,35 +96,14 @@ class BalanceController extends Controller
     }
 
 
+    public function getBillsec() {
+
+        $billsec = $this->queryList();
+
+        $total_billsec = $billsec->sum('billsec');
 
 
-    private function getTotal()
-    {
-        $prices = Cdr::where('dcontext', '=', 'SMILan_rulematch')
-            ->whereRaw('LENGTH(dst) != 4')
-            ->get();
-
-        $this->total = 0;
-
-        foreach ($prices as $price)
-        {
-            if(substr($price->dst,'0','2') === '01')
-            {
-                $this->total = $this->total + ceil($price->billsec/10)*6.8;
-            }
-            if(substr($price->dst, 0,2)==='86')
-            {
-                $this->total = $this->total + ceil($price->billsec/60)*22;
-            }
-            if((substr($price->dst, 0,3)==='070') || (substr($price->dst,0,3) === '050' ))
-            {
-                $this->total = $this->total + ceil($price->billsec/180)*45;
-            }
-            if((substr($price->dst, 0,2)!='01') && (substr($price->dst,0,2) != '86' ) && (substr($price->dst,0,3) != '070' ) && (substr($price->dst,0,3) != '050' ))
-            {
-                $this->total = $this->total + ceil($price->billsec/180)*32;
-            }
-        }
+        return $total_billsec;
 
     }
 
