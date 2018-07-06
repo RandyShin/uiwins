@@ -58,7 +58,7 @@
                     <tr>
                         <td>{{ str_replace('-','',(($cdrs->currentpage()-1) *15) - ($cnt--))  }}</td>
                         <td>{{ $cdr->src }}</td>
-                        <td>{{ $cdr->did }}</td>
+                        <td>{{ substr($cdr->lastdata, 18, 10)}}</td>
                         <td>{{ $cdr->disposition }}</td>
                         <td>{{ $cdr->duration }}</td>
                         <td>{{ substr($cdr->calldate,11,10) }}</td>
