@@ -30,7 +30,7 @@ class HomeController extends Controller
 
     public function saveLog(Request $request)
     {
-        date_default_timezone_set("Asia/Manila");
+        date_default_timezone_set("Asia/seoul");
         $log = new ConCurrent();
 
         $log->value = $request->input('value');
