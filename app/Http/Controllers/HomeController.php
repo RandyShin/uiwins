@@ -45,4 +45,8 @@ class HomeController extends Controller
     {
         ConCurrent::truncate();
     }
+
+    public function maxCon(){
+        return ConCurrent::get()->max('value');
+    }
 }

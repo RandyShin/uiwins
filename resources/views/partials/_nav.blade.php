@@ -22,6 +22,9 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::check())
                     <li class="">
+                        <button type="button" class="btn btn-warning" style="line-height: 20px; margin-top: 8px;margin-right: 2px" id="MaxConCurrent">Today Max <span class="badge"></span></button>
+                    </li>
+                    <li class="">
                         <button type="button" class="btn btn-primary" style="line-height: 20px; margin-top: 8px;" id="btnConCurrent">ConCurrent <span class="badge"></span></button>
                     </li>
                     <li class="dropdown">
@@ -46,6 +49,19 @@
 @push('scripts')
  <script type="text/javascript">
      $(document).ready(function () {
+
+         $.ajax({
+             url: "/con-current/maxCon" ,
+             type: "GET",
+             dataType: 'json',
+             random:Math.random(),
+             async: false,
+             cache: false,
+             success : function (response) {
+                    $('#MaxConCurrent span').text(response)
+
+             }
+         })
 
          $.ajax({
              url: "http://58.71.62.118/cc.php" ,
