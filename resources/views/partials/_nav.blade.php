@@ -21,7 +21,9 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::check())
-
+                    <li class="">
+                        <button type="button" class="btn btn-primary" style="line-height: 20px; margin-top: 8px;" id="btnConCurrent">ConCurrent <span class="badge"></span></button>
+                    </li>
                     <li class="dropdown">
                         <a href="/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hello {{ Auth::user()->name }} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -40,3 +42,36 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+
+@push('scripts')
+ <script type="text/javascript">
+     $(document).ready(function () {
+
+         setInterval(getCCVal, 2500);
+
+        function getCCVal(){
+            $.ajax({
+                url: "http://58.71.62.118/cc.php" ,
+                type: "GET",
+                dataType: 'json',
+                random:Math.random(),
+                async: false,
+                cache: false,
+                success : function (response) {
+
+                    $('#btnConCurrent span').text(response)
+
+                    $.ajax({
+                        url: " /con-current/save" ,
+                        type: "POST",
+                        data: { value: response, _token : $('meta[name="csrf-token"]').attr('content') }
+                    })
+                },
+                error: function(response){
+
+                }
+            })
+        }
+     })
+ </script>
+@endpush

@@ -21,6 +21,6 @@
 @include('partials._javascript')
 
 @yield('scripts')
-
+@stack('scripts')
 </body>
 </html>
