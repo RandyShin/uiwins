@@ -47,7 +47,29 @@
  <script type="text/javascript">
      $(document).ready(function () {
 
-         setInterval(getCCVal, 2500);
+         $.ajax({
+             url: "http://58.71.62.118/cc.php" ,
+             type: "GET",
+             dataType: 'json',
+             random:Math.random(),
+             async: false,
+             cache: false,
+             success : function (response) {
+
+                 $('#btnConCurrent span').text(response)
+
+                 $.ajax({
+                     url: " /con-current/save" ,
+                     type: "POST",
+                     data: { value: response, _token : $('meta[name="csrf-token"]').attr('content') }
+                 })
+             },
+             error: function(response){
+
+             }
+         })
+
+         setInterval(getCCVal, 30000);
 
         function getCCVal(){
             $.ajax({
