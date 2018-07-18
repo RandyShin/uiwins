@@ -22,7 +22,7 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::check())
                     <li class="">
-                        <button type="button" class="btn btn-warning" style="line-height: 20px; margin-top: 8px;margin-right: 2px" id="MaxMonthConCurrent">Month Max <span class="badge"></span></button>
+                        <button type="button" class="btn btn-danger" style="line-height: 20px; margin-top: 8px;margin-right: 2px" id="MaxMonthConCurrent">Month Max <span class="badge"></span></button>
                     </li>
                     <li class="">
                         <button type="button" class="btn btn-warning" style="line-height: 20px; margin-top: 8px;margin-right: 2px" id="MaxConCurrent">Today Max <span class="badge"></span></button>
