@@ -47,69 +47,22 @@
 </nav>
 
 @push('scripts')
- <script type="text/javascript">
-     $(document).ready(function () {
+<script src = "http://13.125.130.234:3000/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+     $(function () {
+         var socket = io(':3000');
+         var con_current = $('#btnConCurrent span');
+         var max_current = $('#MaxConCurrent span');
 
-         $.ajax({
-             url: "/con-current/maxCon" ,
-             type: "GET",
-             dataType: 'json',
-             random:Math.random(),
-             async: false,
-             cache: false,
-             success : function (response) {
-                    $('#MaxConCurrent span').text(response)
+         socket.on('connect', function(){
+             socket.on('con current', function(data){
+                 con_current.text(data.value)
+             });
 
-             }
-         })
-
-         $.ajax({
-             url: "http://58.71.62.118/cc.php" ,
-             type: "GET",
-             dataType: 'json',
-             random:Math.random(),
-             async: false,
-             cache: false,
-             success : function (response) {
-
-                 $('#btnConCurrent span').text(response)
-
-                 $.ajax({
-                     url: " /con-current/save" ,
-                     type: "POST",
-                     data: { value: response, _token : $('meta[name="csrf-token"]').attr('content') }
-                 })
-             },
-             error: function(response){
-
-             }
-         })
-
-         setInterval(getCCVal, 30000);
-
-        function getCCVal(){
-            $.ajax({
-                url: "http://58.71.62.118/cc.php" ,
-                type: "GET",
-                dataType: 'json',
-                random:Math.random(),
-                async: false,
-                cache: false,
-                success : function (response) {
-
-                    $('#btnConCurrent span').text(response)
-
-                    $.ajax({
-                        url: " /con-current/save" ,
-                        type: "POST",
-                        data: { value: response, _token : $('meta[name="csrf-token"]').attr('content') }
-                    })
-                },
-                error: function(response){
-
-                }
-            })
-        }
-     })
- </script>
+             socket.on('max current', function(data){
+                 max_current.text(data.max)
+             });
+         });
+     });
+</script>
 @endpush

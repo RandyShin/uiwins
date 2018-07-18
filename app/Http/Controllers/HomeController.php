@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['saveLog','maxCon']);
     }
 
     /**
@@ -37,7 +37,7 @@ class HomeController extends Controller
         $log->created_at = Carbon::now();
 
         if ($log->save()){
-            return $log->toArray;
+            return $log->toArray();
         }
     }
 
@@ -47,6 +47,9 @@ class HomeController extends Controller
     }
 
     public function maxCon(){
-        return ConCurrent::get()->max('value');
+
+        $maxCon = ConCurrent::get()->max('value');
+
+        return response()->json([ 'max' => $maxCon ]);
     }
 }
