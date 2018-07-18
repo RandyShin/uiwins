@@ -22,6 +22,9 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::check())
                     <li class="">
+                        <button type="button" class="btn btn-warning" style="line-height: 20px; margin-top: 8px;margin-right: 2px" id="MaxMonthConCurrent">Month Max <span class="badge"></span></button>
+                    </li>
+                    <li class="">
                         <button type="button" class="btn btn-warning" style="line-height: 20px; margin-top: 8px;margin-right: 2px" id="MaxConCurrent">Today Max <span class="badge"></span></button>
                     </li>
                     <li class="">
@@ -53,6 +56,7 @@
          var socket = io(':3000');
          var con_current = $('#btnConCurrent span');
          var max_current = $('#MaxConCurrent span');
+         var month_max_current = $('#MaxMonthConCurrent span');
 
          socket.on('connect', function(){
              socket.on('con current', function(data){
@@ -60,7 +64,8 @@
              });
 
              socket.on('max current', function(data){
-                 max_current.text(data.max)
+                 max_current.text(data.max);
+                 month_max_current.text(data.month);
              });
          });
      });

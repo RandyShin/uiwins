@@ -48,8 +48,12 @@ class HomeController extends Controller
 
     public function maxCon(){
 
-        $maxCon = ConCurrent::get()->max('value');
+        $today = Carbon::today();
 
-        return response()->json([ 'max' => $maxCon ]);
+        $maxCon = ConCurrent::whereDate('created_at', $today)->max('value');
+
+        $maxMonthCon = ConCurrent::whereMonth('created_at', $today->month)->max('value');
+
+        return response()->json([ 'max' => $maxCon, 'month' => $maxMonthCon ]);
     }
 }
