@@ -50,13 +50,7 @@ class BalanceController extends Controller
 
         $params = $request->all();
 
-        $cdrs = $this->queryList();
-        $cdrs = $cdrs->orderBy('calldate', 'desc')->paginate(15);
-
-        $prices = Cdr::where('dcontext', '=', 'SMILan_rulematch')
-            ->whereRaw('LENGTH(dst) != 4')
-            ->get();
-
+        $cdrs = $this->queryList()->orderBy('calldate', 'desc')->paginate(15);;
 
         $cnt = $cdrs->total();
 
@@ -101,7 +95,6 @@ class BalanceController extends Controller
         $billsec = $this->queryList();
 
         $total_billsec = $billsec->sum('billsec');
-
 
         return $total_billsec;
 
