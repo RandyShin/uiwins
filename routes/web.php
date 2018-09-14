@@ -41,3 +41,5 @@ Route::get('/con-current/maxCon', 'HomeController@maxCon');
 
 
 route::get('/test', 'BalanceController@getBillsec');
+
+Route::get('/events', 'EventController@index');
