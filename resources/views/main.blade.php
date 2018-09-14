@@ -6,7 +6,7 @@
 <body>
 
 @include('partials._nav')
-
+@yield('style')
 <div class="container">
 
     {{--{{ Auth::check() ? "Logged In" : "Logged Out" }}--}}
