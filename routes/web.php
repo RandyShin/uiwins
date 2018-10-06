@@ -39,5 +39,7 @@ Route::post('/con-current/save', 'HomeController@saveLog');
 Route::get('/con-current/empty', 'HomeController@emptyLog');
 Route::get('/con-current/maxCon', 'HomeController@maxCon');
 
+Route::get('/statistics', 'StatisticsController@index');
+
 
 route::get('/test', 'BalanceController@getBillsec');
