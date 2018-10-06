@@ -51,7 +51,7 @@
 
 <?php
         for ($i=0 ; $i <= 31 ; $i++) {
-            echo $data[ 0 ]->value . '</br>';
+            echo $data[ $i ]->value . '</br>';
             echo $i;
 
         }
