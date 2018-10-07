@@ -36,23 +36,16 @@ class StatisticsController extends Controller
                 $list[]=date('Y-m-d', $time);
         }
 
-//        $data = ConCurrent::where('created_at', 'like', '2018-10-04%')->orderby('value','ase')->get()->first();
-//
-//        dd($data->value);
 
         foreach($list as $item) {
-//            $data[] = ConCurrent::select('created_at','value')->where('id', 'like', $item . '%')->orderby('value','desc')->get()->first();
 
-//
-//
-            $data[] = DB::table('con_current')->select('value','created_at', 'id')->where('created_at', 'like', $item.'%')->orderby('value','ase')->get()->first;
-//
-//
-//
-//
+            $data[] = ConCurrent::select('created_at','value','id')->where('created_at', 'like', $item . '%')->orderby('value','desc')->get()->first();
+
+
+//            $data[] = DB::table('con_current')->select('value','created_at', 'id')->where('created_at', 'like', $item.'%')->orderby('value','ase')->get()->first;
+
         }
 
-//dd($data['3']->id);
         return view('statistics.index', compact( 'dateFrom', 'data', 'cnt', 'list'));
     }
 }

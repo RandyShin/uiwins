@@ -38,6 +38,9 @@
 
 {{--@php--}}
     {{--print_r($data);--}}
+   {{--// echo '<pre>'; print_r($array); echo '</pre>';--}}
+
+
 {{--exit;--}}
 {{--@endphp--}}
                         <tbody>
