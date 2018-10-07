@@ -37,28 +37,20 @@
                         </thead>
 
 {{--@php--}}
-    {{--print_r($list);--}}
+    {{--print_r($data);--}}
 {{--exit;--}}
 {{--@endphp--}}
                         <tbody>
 
-                        {{--@foreach($data as $item)--}}
-                            {{--<tr>--}}
-                                {{--<td>{{ $item->created_at }}</td>--}}
-
-                            {{--</tr>--}}
-                        {{--@endforeach--}}
-
-<?php
-        for ($i=0 ; $i <= 31 ; $i++) {
-            echo $data[ $i ]->value . '</br>';
-            echo $i;
-
-        }
-
-
-        ?>
-
+                        @foreach($data as $item)
+                            @if(isset($item->id))
+                            <tr>
+                                <td>{{ substr($item->created_at, 0, 10) }}</td>
+                                <td>{{ $item->value }}</td>
+                                <td>{{ $item->value }}</td>
+                            </tr>
+                            @endif
+                        @endforeach
 
                         </tbody>
                     </table>

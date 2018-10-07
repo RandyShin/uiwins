@@ -41,10 +41,11 @@ class StatisticsController extends Controller
 //        dd($data->value);
 
         foreach($list as $item) {
-//            $data[] = ConCurrent::where('created_at', 'like', $item . '%')->orderby('value','ase')->get()->first();
+//            $data[] = ConCurrent::select('created_at','value')->where('id', 'like', $item . '%')->orderby('value','desc')->get()->first();
+
 //
 //
-            $data[] = DB::table('con_current')->where('created_at', 'like', $item.'%')->orderby('value','ase')->get()->first();
+            $data[] = DB::table('con_current')->select('value','created_at', 'id')->where('created_at', 'like', $item.'%')->orderby('value','ase')->get()->first;
 //
 //
 //
