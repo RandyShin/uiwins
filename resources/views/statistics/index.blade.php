@@ -37,22 +37,29 @@
                         </thead>
 
 {{--@php--}}
-    {{--print_r($data);--}}
+
+    {{--dd($list);--}}
+
    {{--// echo '<pre>'; print_r($array); echo '</pre>';--}}
 
 
 {{--exit;--}}
 {{--@endphp--}}
+
+
+
                         <tbody>
 
-                        @foreach($data as $item)
-                            @if(isset($item->id))
+                        @foreach($list as $key => $item)
                             <tr>
-                                <td>{{ substr($item->created_at, 0, 10) }}</td>
-                                <td>{{ $item->value }}</td>
-                                <td>{{ $item->value }}</td>
+                                <td>{{ $key }}</td>
+                                @if(isset($item->id))
+                                    <td>{{ $item->value }}</td>
+                                    <td>{{ $item->value }}</td>
+                                @endif
                             </tr>
-                            @endif
+
+
                         @endforeach
 
                         </tbody>
