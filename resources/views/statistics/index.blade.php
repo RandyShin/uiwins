@@ -37,29 +37,31 @@
                         </tr>
                         </thead>
 
-{{--@php--}}
+@php
 
-    {{--dd($list);--}}
+   // dd($data);
 
-   {{--// echo '<pre>'; print_r($array); echo '</pre>';--}}
+   // echo '<pre>'; print_r($array); echo '</pre>';
 
-{{--exit;--}}
-{{--@endphp--}}
+
+@endphp
 
 
 
                         <tbody>
 
-                        @foreach($list as $key => $item)
+                        @foreach($data as $item)
                             <tr>
-                                <td>{{ $key }}</td>
-                                @if(isset($item))
-                                    <td>{{ $item->max_value }}</td>
-                                    <td>{{ number_format(ceil(($item->total_min)/60)) }}min</td>
-                                @else
-                                    <td></td>
-                                    <td></td>
-                                @endif
+                                <td>{{ $item['date'] }}</td>
+                                <td>{{ $item['max'] }}</td>
+                                <td>{{ number_format(ceil((intval($item['billsec']))/60)) }} min</td>
+                                {{--@if(isset($item))--}}
+                                    {{--<td>{{ $item->max_value }}</td>--}}
+                                    {{--<td>{{ number_format(ceil(($item->total_min)/60)) }}min</td>--}}
+                                {{--@else--}}
+                                    {{--<td></td>--}}
+                                    {{--<td></td>--}}
+                                {{--@endif--}}
                             </tr>
 
 
