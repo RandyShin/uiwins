@@ -34,8 +34,8 @@ class StatisticsController extends Controller
         {
             $time=mktime(12, 0, 0, $month, $d, $year);
             if (date('m', $time)==$month) {
-                //                $list[]=date('Y-m-d-D', $time);
-                $currentDate = date('Y-m-d', $time);
+//                $list[]=date('Y-m-d-D', $time);
+                $currentDate = date('Y-m-d(D)', $time);
 
             $datelist[] = $currentDate;
               }
