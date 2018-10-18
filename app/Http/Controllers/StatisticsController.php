@@ -24,21 +24,10 @@ class StatisticsController extends Controller
 
         $dateFrom = $this->dateFrom;
 
-        $list=[];
         $month = substr($dateFrom, 5,2);
         $year = substr($dateFrom,0,4);
 
         $setDate = substr($dateFrom, 0,7);
-
-
-//        $val = ConCurrent::where('created_at', 'like', '2018-10-02%')->max('value');
-//
-//        dd($val);
-
-
-
-//        $list[]= ConCurrent::selectRaw('DATE(created_at) as date,max(value) as value')->groupBy('date')->get();
-//        dd($list);
 
 
         for($d=1; $d<=31; $d++)
@@ -47,20 +36,12 @@ class StatisticsController extends Controller
             if (date('m', $time)==$month) {
                 //                $list[]=date('Y-m-d-D', $time);
                 $currentDate = date('Y-m-d', $time);
-//                $list[$currentDate] = new \stdClass();  // make object
-//                $list[$currentDate]->max_value = ConCurrent::selectRaw('DATE(created_at) as date,max(value) as value')->groupBy('date')->get();
-//                $list[$currentDate]->max_value = ConCurrent::where('created_at', 'like', $currentDate . '%')->max('value');
-//                $list[$currentDate]->total_min = Cdr::where([
-//                                                    ['calldate', 'like', $currentDate . '%'],
-//                                                    ['dstchannel', 'like', 'SIP/UnitedKingdom%']
-//                ])->sum('billsec');
 
             $datelist[] = $currentDate;
               }
         }
 
 
-        $list = new \stdClass();
         $max_value = DB::table('con_current')
             ->where('created_at', 'like', $setDate . '%')
             ->groupBy('date')
@@ -76,8 +57,6 @@ class StatisticsController extends Controller
             ->selectRaw('DATE(calldate) as date, sum(billsec) as billsec')
             ->get();
 
-        $list->datelist = $datelist;
-
         $data = [];
         foreach($datelist as $key => $datevalue){
             array_push($data, [
@@ -86,7 +65,7 @@ class StatisticsController extends Controller
                 'billsec' => isset($total_min[$key]) ? $total_min[$key]->billsec : ''
             ]);
         }
-//        dd($data);
+//        dd($datevalue);
 
         $currentMonth = substr($currentDate,0,7);
 
