@@ -3,12 +3,36 @@
 @section('content')
 
     <div class="row">
+
         <div class="col-md-12">
+
             <span style="font-weight:900; font-size: 20px;">{{ Auth::user()->name }} Statistics Page</span>
 
             <div class="col-md-12">
 
                 <form action="" method="GET" onsubmit="search()" id="frmsearch">
+
+                    <table id="logtable" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            @foreach($monthlyvalue as $item)
+                            <th  style="text-align: center">{{ $item->date }}</th>
+                            @endforeach
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+
+                            <tr>
+                                @foreach($monthlyvalue as $item)
+                                <td style="text-align: center">{{ (intval($item->billsec)) !== 0 ? number_format(ceil((intval($item->billsec))/60)) . " min" : "" }}</td>
+                                @endforeach
+                            </tr>
+
+
+                        </tbody>
+                    </table>
 
                     <table class="table tabled-bordered" style="margin-bottom: 0px;">
                         <tr>

@@ -30,6 +30,28 @@ class StatisticsController extends Controller
         $setDate = substr($dateFrom, 0,7);
 
 
+        for( $m=0; $m<=3; $m++)
+        {
+            $monthly   = date("Y-m", mktime(0, 0, 0, intval(date('m'))-$m, intval(date('d')), intval(date('Y'))  ));
+            $monthlydata[] = $monthly;
+        }
+
+        $monthlyvalue = [];
+        foreach( $monthlydata as $item ) {
+            $monthlydata = DB::table('cdr')
+                ->where([
+                    ['calldate', 'like', $item . '%'],
+                    ['dstchannel', 'like', 'SIP/UnitedKingdom%']
+                ])
+                ->selectRaw('DATE(calldate) as date, sum(billsec) as billsec')
+                ->first();
+
+            $monthlyvalue[] = $monthlydata;
+
+        }
+
+//dd($monthlyvalue);
+
         for($d=1; $d<=31; $d++)
         {
             $time=mktime(12, 0, 0, $month, $d, $year);
@@ -71,6 +93,6 @@ class StatisticsController extends Controller
 
         $total = Cdr::where('calldate', 'like', $currentMonth . '%')->sum('billsec');
 
-        return view('statistics.index', compact( 'dateFrom', 'total', 'cnt', 'data'));
+        return view('statistics.index', compact( 'dateFrom', 'total', 'cnt', 'data', 'monthlyvalue'));
     }
 }
