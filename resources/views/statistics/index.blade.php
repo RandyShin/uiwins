@@ -16,7 +16,9 @@
                         <thead>
                         <tr>
                             @foreach($monthlyvalue as $item)
-                            <th  style="text-align: center">{{ $item->date }}</th>
+                            <th  style="text-align: center">{{ date("Y-m", strtotime($item->date)) }}</th>
+
+
                             @endforeach
                         </tr>
                         </thead>
