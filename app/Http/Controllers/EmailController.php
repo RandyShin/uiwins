@@ -9,6 +9,13 @@ use DB;
 
 class EmailController extends Controller
 {
+
+    public function __construct(Request $request)
+    {
+        $this->middleware('auth');
+
+    }
+
     public function send(Request $request)
     {
         //get today data
