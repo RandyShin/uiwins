@@ -1,3 +1,3 @@
 Hi <strong>This is ZioTes!</strong>,
-
-<p>{{ $body }}</p>
+{{--@php(dd($body))--}}
+<p>{{ $body->date }}</p><p>{{ $body->billsec }}</p>
