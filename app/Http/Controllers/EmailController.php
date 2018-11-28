@@ -10,12 +10,6 @@ use DB;
 class EmailController extends Controller
 {
 
-    public function __construct(Request $request)
-    {
-        $this->middleware('auth');
-
-    }
-
     public function send(Request $request)
     {
         //get today data
@@ -35,12 +29,12 @@ class EmailController extends Controller
 
         //end get data
 
-        $email = "randy@ziotes.com";
-        $subject = "my subject";
+        $email = ["randy@ziotes.com", "randyshin@gmail.com"];
+        $subject = $today . "] DID usage report!";
         $body = $todaydata;
 
 
-        $to_name = 'Randy Shin';
+        $to_name = 'ZioTes';
         $to_email = $email;
         $data = array('name'=>"name", "body" => $body);
 
