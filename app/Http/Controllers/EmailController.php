@@ -17,9 +17,6 @@ class EmailController extends Controller
         $today =date('Y-m-d',strtotime("-1 days"));
         $month = substr(date('Y-m-d'),0,7);
 
-
-
-
         $todaydata = DB::table('cdr')
             ->where([
                 ['calldate', 'like',  $today . '%'],
