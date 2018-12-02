@@ -15,7 +15,7 @@ class EmailController extends Controller
         //get today data
 //        $currentMonth = substr($currentDate,0,7);
         $today =date('Y-m-d',strtotime("-1 days"));
-
+        $month = substr(date('Y-m-d'),0,7);
 
         $todaydata = DB::table('cdr')
             ->where([
@@ -25,13 +25,20 @@ class EmailController extends Controller
             ->selectRaw('DATE(calldate) as date, sum(billsec) as billsec')
             ->first();
 
+        $thismonth = DB::table('cdr')
+            ->where([
+                ['calldate', 'like',  $month . '%'],
+                ['dstchannel', 'like', 'SIP/UnitedKingdom%']
+            ])
+            ->selectRaw('DATE(calldate) as date, sum(billsec) as billsec')
+            ->first();
 
 
         //end get data
 
-        $email = ["randy@ziotes.com", "randyshin@gmail.com"];
+        $email = ["randy@ziotes.com", "shwoo@uiwins.co.kr"];
         $subject = $today . "] DID usage report!";
-        $body = $todaydata;
+        $body = [$todaydata, $thismonth];
 
 
         $to_name = 'ZioTes';
