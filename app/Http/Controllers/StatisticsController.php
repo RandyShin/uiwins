@@ -30,7 +30,7 @@ class StatisticsController extends Controller
         $setDate = substr($dateFrom, 0,7);
 
 
-        for( $m=0; $m<=3; $m++)
+        for( $m=0; $m<=4; $m++)  //number of month
         {
             $monthly   = date("Y-m", mktime(0, 0, 0, intval(date('m'))-$m, intval(date('d')), intval(date('Y'))  ));
             $monthlydata[] = $monthly;
@@ -91,7 +91,9 @@ class StatisticsController extends Controller
 
         $currentMonth = substr($currentDate,0,7);
 
-        $total = Cdr::where('calldate', 'like', $currentMonth . '%')->sum('billsec');
+        $total = Cdr::where('calldate', 'like', $currentMonth . '%')
+                    ->where('dstchannel', 'like', 'SIP/UnitedKingdom%')
+                    ->sum('billsec');
 
         return view('statistics.index', compact( 'dateFrom', 'total', 'cnt', 'data', 'monthlyvalue'));
     }
