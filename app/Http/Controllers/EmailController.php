@@ -36,7 +36,7 @@ class EmailController extends Controller
 
         //end get data
 
-        $email = ["randy@ziotes.com", "shwoo@uiwins.co.kr"];
+        $email = ["randy@ziotes.com", "bnkcom.kor@gmail.com"];
         $subject = $today . "] DID usage report!";
         $body = [$todaydata, $thismonth];
 
