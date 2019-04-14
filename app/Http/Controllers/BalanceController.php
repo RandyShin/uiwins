@@ -12,6 +12,7 @@ use App\Deposit;
 use DB;
 use Excel;
 use Auth;
+use App\UiwinsCDR;
 
 
 class BalanceController extends Controller
@@ -37,17 +38,21 @@ class BalanceController extends Controller
         $cdrs = Cdr::where('calldate','>=', $this->dateFrom . ' 00:00:00')
             ->where('calldate','<=', $this->dateTo . ' 23:59:59');
     }
+        elseif (Auth::user()->name === 'uiwins') {  //show only 40 channels(benjamin request)
+            $cdrs = Cdr::where('calldate','>=', $this->dateFrom . ' 00:00:00')
+                        ->where('calldate','<=', $this->dateTo . ' 23:59:59')
+                        ->where('did','LIKE','02849%');
+        }
         else{
             $cdrs = Cdr::where('dstchannel', 'like', 'SIP/UnitedKingdom%')
                 ->where('calldate','>=', $this->dateFrom . ' 00:00:00')
                 ->where('calldate','<=', $this->dateTo . ' 23:59:59');
         }
-
         return $cdrs;
     }
+
     public function index(Request $request)
     {
-
         $params = $request->all();
 
         $cdrs = $this->queryList()->orderBy('calldate', 'desc')->paginate(15);;
