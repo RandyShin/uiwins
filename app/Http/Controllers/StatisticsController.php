@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
 use App\Cdr;
+use Auth;
 
 
 class StatisticsController extends Controller
@@ -30,24 +31,59 @@ class StatisticsController extends Controller
         $setDate = substr($dateFrom, 0,7);
 
 
-        for( $m=0; $m<=4; $m++)  //number of month
-        {
-            $monthly   = date("Y-m", mktime(0, 0, 0, intval(date('m'))-$m, intval(date('d')), intval(date('Y'))  ));
-            $monthlydata[] = $monthly;
+        if (Auth::user()->name === 'uiwins') {
+            for( $m=0; $m<=4; $m++)  //number of month
+            {
+                $monthly   = date("Y-m", mktime(0, 0, 0, intval(date('m'))-$m, intval(date('d')), intval(date('Y'))  ));
+                $monthlydata[] = $monthly;
+            }
+            $monthlyvalue = [];
+        }else{
+            for( $m=0; $m<=6; $m++)  //number of month
+            {
+                $monthly   = date("Y-m", mktime(0, 0, 0, intval(date('m'))-$m, intval(date('d')), intval(date('Y'))  ));
+                $monthlydata[] = $monthly;
+            }
+            $monthlyvalue = [];
         }
 
-        $monthlyvalue = [];
+
+
         foreach( $monthlydata as $item ) {
-            $monthlydata = DB::table('cdr')
-                ->where([
-                    ['calldate', 'like', $item . '%'],
-                    ['dstchannel', 'like', 'SIP/UnitedKingdom%']
-                ])
-                ->selectRaw('DATE(calldate) as date, sum(billsec) as billsec')
-                ->first();
 
-            $monthlyvalue[] = $monthlydata;
+            if ( Auth::user()->name === 'admin') {
+                $monthlydata = DB::table('cdr')
+                    ->where([
+                        ['calldate', 'like', $item . '%']
+                    ])
+                    ->selectRaw('DATE(calldate) as date, sum(billsec) as billsec')
+                    ->first();
 
+                $monthlyvalue[] = $monthlydata;
+            }
+            elseif (Auth::user()->name === 'uiwins') {  //show only 40 channels(benjamin request)
+                $monthlydata = DB::table('cdr')
+                    ->where([
+                        ['calldate', 'like', $item . '%'],
+                        ['dstchannel', 'like', 'SIP/UnitedKingdom%'],
+                        ['did', 'like', '02849%']
+                    ])
+                    ->selectRaw('DATE(calldate) as date, sum(billsec) as billsec')
+                    ->first();
+
+                $monthlyvalue[] = $monthlydata;
+            }
+            else{
+                $monthlydata = DB::table('cdr')
+                    ->where([
+                        ['calldate', 'like', $item . '%'],
+                        ['dstchannel', 'like', 'SIP/UnitedKingdom%']
+                    ])
+                    ->selectRaw('DATE(calldate) as date, sum(billsec) as billsec')
+                    ->first();
+
+                $monthlyvalue[] = $monthlydata;
+            }
         }
 
 //dd($monthlyvalue);
