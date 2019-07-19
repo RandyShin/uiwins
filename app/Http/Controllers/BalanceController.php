@@ -41,7 +41,11 @@ class BalanceController extends Controller
         elseif (Auth::user()->name === 'uiwins') {  //show only 40 channels(benjamin request)
             $cdrs = Cdr::where('calldate','>=', $this->dateFrom . ' 00:00:00')
                         ->where('calldate','<=', $this->dateTo . ' 23:59:59')
-                        ->where('did','LIKE','02849%');
+                        ->where(function ($query) {
+                            $query->orWhere('did','LIKE','02849115%')
+                                  ->orWhere('did','LIKE','02849116%')
+                                  ->orWhere('did','LIKE','02849119%');
+                        });
         }
         else{
             $cdrs = Cdr::where('dstchannel', 'like', 'SIP/UnitedKingdom%')
