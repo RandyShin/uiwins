@@ -110,28 +110,49 @@ class StatisticsController extends Controller
             ->selectRaw('DATE(created_at) as date,max(value) as value')
             ->get();
 
-        $total_min = DB::table('cdr')
-            ->where([
-                ['calldate', 'like', $setDate . '%'],
-                ['dstchannel', 'like', 'SIP/UnitedKingdom%']
-            ])
-            ->where(function ($query) {
-                $query->orWhere('did','LIKE','02849115%')
-                    ->orWhere('did','LIKE','02849116%')
-                    ->orWhere('did','LIKE','02849119%');
-            })
-            ->groupBy('date')
-            ->selectRaw('DATE(calldate) as date, sum(billsec) as billsec')
-            ->get();
+        if (Auth::user()->name === 'uiwins'){
+            $total_min = DB::table('cdr')
+                ->where([
+                    ['calldate', 'like', $setDate . '%'],
+                    ['dstchannel', 'like', 'SIP/UnitedKingdom%']
+                ])
+                ->where(function ($query) {
+                    $query->orWhere('did','LIKE','02849115%')
+                        ->orWhere('did','LIKE','02849116%')
+                        ->orWhere('did','LIKE','02849119%');
+                })
+                ->groupBy('date')
+                ->selectRaw('DATE(calldate) as date, sum(billsec) as billsec')
+                ->get();
 
-        $data = [];
-        foreach($datelist as $key => $datevalue){
-            array_push($data, [
-                'date' => $datevalue,
-                'max' => isset($max_value[$key]) ? $max_value[$key]->value : '',
-                'billsec' => isset($total_min[$key]) ? $total_min[$key]->billsec : ''
-            ]);
+            $data = [];
+            foreach($datelist as $key => $datevalue){
+                array_push($data, [
+                    'date' => $datevalue,
+                    'max' => isset($max_value[$key]) ? $max_value[$key]->value : '',
+                    'billsec' => isset($total_min[$key]) ? $total_min[$key]->billsec : ''
+                ]);
+            }
+        }else{
+            $total_min = DB::table('cdr')
+                ->where([
+                    ['calldate', 'like', $setDate . '%'],
+                    ['dstchannel', 'like', 'SIP/UnitedKingdom%']
+                ])
+                ->groupBy('date')
+                ->selectRaw('DATE(calldate) as date, sum(billsec) as billsec')
+                ->get();
+
+            $data = [];
+            foreach($datelist as $key => $datevalue){
+                array_push($data, [
+                    'date' => $datevalue,
+                    'max' => isset($max_value[$key]) ? $max_value[$key]->value : '',
+                    'billsec' => isset($total_min[$key]) ? $total_min[$key]->billsec : ''
+                ]);
+            }
         }
+
 //        dd($datevalue);
 
         $currentMonth = substr($currentDate,0,7);
