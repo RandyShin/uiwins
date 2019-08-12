@@ -52,7 +52,9 @@ class HomeController extends Controller
 
         $maxCon = ConCurrent::whereDate('created_at', $today)->max('value');
 
-        $maxMonthCon = ConCurrent::whereMonth('created_at', $today->month)->max('value');
+        $maxMonthCon = ConCurrent::whereMonth('created_at', $today->month)
+            ->whereYear('created_at', $today->year)
+            ->max('value');
 
         return response()->json([ 'max' => $maxCon, 'month' => $maxMonthCon ]);
     }

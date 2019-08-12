@@ -26,7 +26,7 @@
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 
-//DB::listen(function ($query){
+//DB::listen(function ($query){con-current
 //
 //    var_dump($query->sql);
 //
