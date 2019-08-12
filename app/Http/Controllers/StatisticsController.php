@@ -66,8 +66,12 @@ class StatisticsController extends Controller
                     ->where([
                         ['calldate', 'like', $item . '%'],
                         ['dstchannel', 'like', 'SIP/UnitedKingdom%'],
-                        ['did', 'like', '02849%']
                     ])
+                    ->where(function ($query) {
+                        $query->orWhere('did','LIKE','02849115%')
+                            ->orWhere('did','LIKE','02849116%')
+                            ->orWhere('did','LIKE','02849119%');
+                    })
                     ->selectRaw('DATE(calldate) as date, sum(billsec) as billsec')
                     ->first();
 
@@ -111,6 +115,11 @@ class StatisticsController extends Controller
                 ['calldate', 'like', $setDate . '%'],
                 ['dstchannel', 'like', 'SIP/UnitedKingdom%']
             ])
+            ->where(function ($query) {
+                $query->orWhere('did','LIKE','02849115%')
+                    ->orWhere('did','LIKE','02849116%')
+                    ->orWhere('did','LIKE','02849119%');
+            })
             ->groupBy('date')
             ->selectRaw('DATE(calldate) as date, sum(billsec) as billsec')
             ->get();
