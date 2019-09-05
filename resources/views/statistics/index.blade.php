@@ -17,15 +17,11 @@
                         <tr>
                             @foreach($monthlyvalue as $item)
                             <th  style="text-align: center">{{ date("Y-m", strtotime($item->date)) }}</th>
-
-
                             @endforeach
                         </tr>
                         </thead>
 
                         <tbody>
-
-
                             <tr>
                                 @foreach($monthlyvalue as $item)
                                 <td style="text-align: center">{{ (intval($item->billsec)) !== 0 ? number_format(ceil((intval($item->billsec))/60)) . " min" : "" }}</td>

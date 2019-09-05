@@ -157,9 +157,28 @@ class StatisticsController extends Controller
 
         $currentMonth = substr($currentDate,0,7);
 
-        $total = Cdr::where('calldate', 'like', $currentMonth . '%')
+
+        if (Auth::user()->name === 'uiwins'){
+            $total = DB::table('cdr')
+                ->where([
+                    ['calldate', 'like', $setDate . '%'],
+                    ['dstchannel', 'like', 'SIP/UnitedKingdom%']
+                ])
+                ->where(function ($query) {
+                    $query->orWhere('did','LIKE','02849115%')
+                        ->orWhere('did','LIKE','02849116%')
+                        ->orWhere('did','LIKE','02849119%');
+                })->sum('billsec');
+
+            }
+            else{
+                $total = Cdr::where('calldate', 'like', $currentMonth . '%')
                     ->where('dstchannel', 'like', 'SIP/UnitedKingdom%')
                     ->sum('billsec');
+            }
+
+
+
 
         return view('statistics.index', compact( 'dateFrom', 'total', 'cnt', 'data', 'monthlyvalue'));
     }
