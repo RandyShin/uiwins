@@ -45,3 +45,5 @@ Route::get('/statistics', 'StatisticsController@index');
 route::get('/test', 'BalanceController@getBillsec');
 
 Route::any('/email', 'EmailController@send');
+
+Route::get('/china', 'ChinaController@index');
