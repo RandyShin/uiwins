@@ -127,8 +127,6 @@ class StatisticsController extends Controller
 
             $data = [];
 
-            dd($datelist, $total_min, $max_value);
-
             foreach($datelist as $key => $datevalue){
                 array_push($data, [
                     'date' => $datevalue,
@@ -179,9 +177,6 @@ class StatisticsController extends Controller
                     ->where('dstchannel', 'like', 'SIP/UnitedKingdom%')
                     ->sum('billsec');
             }
-
-
-        dd($data);
 
         return view('statistics.index', compact( 'dateFrom', 'total', 'cnt', 'data', 'monthlyvalue'));
     }
