@@ -68,9 +68,9 @@ class StatisticsController extends Controller
                         ['dstchannel', 'like', 'SIP/UnitedKingdom%'],
                     ])
                     ->where(function ($query) {
-                        $query->orWhere('did','LIKE','02849115%')
-                            ->orWhere('did','LIKE','02849116%')
-                            ->orWhere('did','LIKE','02849119%');
+                        $query->orWhere('did','LIKE','028849115%')
+                            ->orWhere('did','LIKE','028849116%')
+                            ->orWhere('did','LIKE','028849119%');
                     })
                     ->selectRaw('DATE(calldate) as date, sum(billsec) as billsec')
                     ->first();
@@ -117,15 +117,18 @@ class StatisticsController extends Controller
                     ['dstchannel', 'like', 'SIP/UnitedKingdom%']
                 ])
                 ->where(function ($query) {
-                    $query->orWhere('did','LIKE','02849115%')
-                        ->orWhere('did','LIKE','02849116%')
-                        ->orWhere('did','LIKE','02849119%');
+                    $query->orWhere('did','LIKE','028849115%')
+                        ->orWhere('did','LIKE','028849116%')
+                        ->orWhere('did','LIKE','028849119%');
                 })
                 ->groupBy('date')
                 ->selectRaw('DATE(calldate) as date, sum(billsec) as billsec')
                 ->get();
 
             $data = [];
+
+            dd($datelist, $total_min, $max_value);
+
             foreach($datelist as $key => $datevalue){
                 array_push($data, [
                     'date' => $datevalue,
@@ -165,9 +168,9 @@ class StatisticsController extends Controller
                     ['dstchannel', 'like', 'SIP/UnitedKingdom%']
                 ])
                 ->where(function ($query) {
-                    $query->orWhere('did','LIKE','02849115%')
-                        ->orWhere('did','LIKE','02849116%')
-                        ->orWhere('did','LIKE','02849119%');
+                    $query->orWhere('did','LIKE','028849115%')
+                        ->orWhere('did','LIKE','028849116%')
+                        ->orWhere('did','LIKE','028849119%');
                 })->sum('billsec');
 
             }
@@ -178,7 +181,7 @@ class StatisticsController extends Controller
             }
 
 
-
+        dd($data);
 
         return view('statistics.index', compact( 'dateFrom', 'total', 'cnt', 'data', 'monthlyvalue'));
     }
