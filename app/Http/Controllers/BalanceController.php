@@ -42,9 +42,9 @@ class BalanceController extends Controller
             $cdrs = Cdr::where('calldate','>=', $this->dateFrom . ' 00:00:00')
                         ->where('calldate','<=', $this->dateTo . ' 23:59:59')
                         ->where(function ($query) {
-                            $query->orWhere('did','LIKE','02849115%')
-                                  ->orWhere('did','LIKE','02849116%')
-                                  ->orWhere('did','LIKE','02849119%');
+                            $query->orWhere('did','LIKE','028849115%')
+                                  ->orWhere('did','LIKE','028849116%')
+                                  ->orWhere('did','LIKE','028849119%');
                         });
         }
         else{
