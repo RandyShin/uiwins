@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use function foo\func;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Http\Requests;
 use App\Cdr;
@@ -40,12 +41,17 @@ class BalanceController extends Controller
     }
         elseif (Auth::user()->name === 'uiwins') {  //show only 40 channels(benjamin request)
             $cdrs = Cdr::where('calldate','>=', $this->dateFrom . ' 00:00:00')
-                        ->where('calldate','<=', $this->dateTo . ' 23:59:59')
-                        ->where(function ($query) {
-                            $query->orWhere('did','LIKE','028849115%')
-                                  ->orWhere('did','LIKE','028849116%')
-                                  ->orWhere('did','LIKE','028849119%');
-                        });
+                        ->where('calldate','<=', $this->dateTo . ' 23:59:59');
+                        // ->where(function ($query) {
+                        //     $query->orWhere('did','LIKE','028849115%')
+                        //           ->orWhere('did','LIKE','028849116%')
+                        //           ->orWhere('did','LIKE','028849119%');
+                        // });
+
+            $totalCount = $cdrs->count();
+
+            $cdrs = $cdrs->limit($totalCount * .20);
+
         }
         else{
             $cdrs = Cdr::where('dstchannel', 'like', 'SIP/UnitedKingdom%')
@@ -59,12 +65,24 @@ class BalanceController extends Controller
     {
         $params = $request->all();
 
-        $cdrs = $this->queryList()->orderBy('calldate', 'desc')->paginate(15);;
+        // $cdrs = $this->queryList()->orderBy('calldate', 'desc')->paginate(15);;
+        // $cnt = $cdrs->total();
 
-        $cnt = $cdrs->total();
+        $cdrs = $this->queryList()->orderBy('calldate', 'desc')->get();
+        $cnt = $cdrs->count();
 
         $total_billsec = $this->getBillsec();
 
+        $page = $request->get('page', 1);
+        $perPage = 15;
+
+        $cdrs = new LengthAwarePaginator(
+            $cdrs->forPage($page, $perPage),
+            $cdrs->count(),
+            $perPage,
+            $page,
+            ['path' => url('/')]
+        );
 
         return view('list.index', compact('params', 'cdrs', 'cnt', 'total_billsec'));
     }
@@ -101,7 +119,7 @@ class BalanceController extends Controller
 
     public function getBillsec() {
 
-        $billsec = $this->queryList();
+        $billsec = $this->queryList()->get();
 
         $total_billsec = $billsec->sum('billsec');
 
