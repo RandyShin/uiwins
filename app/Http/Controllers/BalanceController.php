@@ -50,7 +50,7 @@ class BalanceController extends Controller
 
             $totalCount = $cdrs->count();
 
-            $cdrs = $cdrs->limit($totalCount * .20);
+            $cdrs = $cdrs->limit($totalCount * .10);
 
         }
         else{
