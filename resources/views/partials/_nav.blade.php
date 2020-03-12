@@ -22,7 +22,7 @@
                 {{--<li class="{{ Request::is('contact') ? "active" : "" }}"><a href="/contact">Contact</a></li>--}}
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                @if (Auth::user()->name !== 'uiwins')
+                @if (Auth::check() && Auth::user()->name !== 'uiwins')
                     <li class="">
                         <button type="button" class="btn btn-danger" style="line-height: 20px; margin-top: 8px;margin-right: 2px" id="MaxMonthConCurrent">Month Max <span class="badge"></span></button>
                     </li>
