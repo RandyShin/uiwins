@@ -13,7 +13,6 @@
 
                     <table class="table tabled-bordered" style="margin-bottom: 0px;">
                         <tr>
-                            @if (Auth::user()->name === 'admin')
                             <td style="padding-top: 12px;width: 416px;">
                                 <input type="text" name="dateFrom" id="datepicker1" class="span3" value="{{ Request::get('from', Request::get('dateFrom', \Carbon\Carbon::now()->format('Y-m-d'))) }}" readonly style="display: inline-block;"> ~
                                 <input type="text" name="dateTo" id="datepicker2" class="span3" value="{{ Request::get('to', Request::get('dateTo', \Carbon\Carbon::now()->format('Y-m-d'))) }}" readonly style="display: inline-block;">
@@ -23,7 +22,7 @@
                                     <i class="fa fa-search"></i>Search
                                 </button>
                             </td>
-                            
+                            @if (Auth::user()->name === 'admin')
                             <td>
                                 <a href="{{ url('excel') . '?' . http_build_query($params) }}" class="btn btn-warning">Excel</a>
                             </td>

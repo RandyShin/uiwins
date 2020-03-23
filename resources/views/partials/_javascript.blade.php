@@ -10,7 +10,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
     $( function() {
-        $( "#datepicker1" ).datepicker({ dateFormat: 'yy-mm-dd'}).val();
+        $( "#datepicker1" ).datepicker({ dateFormat: 'yy-mm-dd', minDate: new Date(2020,02,01) }).val();
     } );
 </script>
 
