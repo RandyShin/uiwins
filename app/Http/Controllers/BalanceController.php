@@ -41,16 +41,16 @@ class BalanceController extends Controller
     }
         elseif (Auth::user()->name === 'uiwins') {  //show only 40 channels(benjamin request)
             $cdrs = Cdr::where('calldate','>=', $this->dateFrom . ' 00:00:00')
-                        ->where('calldate','<=', $this->dateTo . ' 23:59:59');
-                        // ->where(function ($query) {
-                        //     $query->orWhere('did','LIKE','028849115%')
-                        //           ->orWhere('did','LIKE','028849116%')
-                        //           ->orWhere('did','LIKE','028849119%');
-                        // });
+                        ->where('calldate','<=', $this->dateTo . ' 23:59:59')
+                        ->where(function ($query) {
+                            $query->orWhere('lastdata','LIKE','%632849116%');
+                                //   ->orWhere('did','LIKE','0288491165%')
+                                //   ->orWhere('did','LIKE','0288491166%');
+                        });
 
             $totalCount = $cdrs->count();
 
-            $cdrs = $cdrs->limit($totalCount * .10);
+            // $cdrs = $cdrs->limit($totalCount * .10);
 
         }
         else{
